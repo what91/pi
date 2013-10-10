@@ -1,0 +1,94 @@
+<html>
+<head>
+	<style type="text/css">
+	body, html{padding:0;
+		margin: 0;}
+	.left{
+/*		float:left;
+*/		height: 100%;
+		font-family: 'Ubuntu', sans-serif;
+		font-size: 100%;
+		/*position: relative;*/
+		display: inline-block;
+		*display: inline;
+		*zoom:1;
+		line-height: 0.9em;
+
+	}
+	#container{
+		/*width: 100%;*/
+		overflow-x: scroll;
+		height: 100%;
+		/*position: absolute;*/
+		white-space: nowrap;
+	}
+	</style>
+
+	<link href='http://fonts.googleapis.com/css?family=Ubuntu&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+<div id="container">
+	
+</div>	
+
+
+<script type='text/javascript' src='./js/jquery-1.10.2.min.js'></script>
+<script type='text/javascript' src='./js/jquery.mousewheel.js'></script>
+
+<script type="text/javascript">
+	var pi = "3141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930381964428810975665933446128475648233786783165271201909145648566923460348610454326648213393607260249141273"
+
+	$(function() {
+
+	   $("#container").mousewheel(function(event, delta) {
+
+	      this.scrollLeft -= (delta * 1);
+	    
+	      event.preventDefault();
+
+	   });
+
+	   var pipartido = pi.split("");
+	   pipartido[0]="3,"
+
+	   for (var i = 0; i < pipartido.length; i++) {
+	   	$("#container").append("<div class='left'>"+pipartido[i]+"</div>");
+	   };
+	   $("#container").append("<div class='left' style='width:"+$(window).width()+"'>&nbsp;</div>")
+	   $("#container").append("<div style='clear:both;'></div>");
+
+	   $(window).resize(function(){
+   		 heightmeasure();
+		});
+	   
+	   $( "#container" ).scroll(function() {
+  		// $( "#log" ).append( "<div>Handler for .scroll() called.</div>" );
+		heightmeasure();
+		
+		});
+	   heightmeasure()
+		// var newwidth = $("#container").width()
+		// $("#container").width(newwidth+$(window).width())
+
+	});
+
+	function heightmeasure(){
+		var child = $("#container").children()
+		for (var i = 0; i < child.length; i++) {
+			var pos = $(child[i]).position();
+			var pequeno = $(window).height()-pos.left
+	   		if(pequeno<10) {
+	   			pequeno = 10
+	   		}
+	   		else if(pequeno>$(window).width()*0.5) {
+	   			pequeno=$(window).width()*0.5
+	   		}
+			$(child[i]).css('font-size',pequeno+'px');
+			};
+	}
+</script>
+
+
+</body>
+</html>
